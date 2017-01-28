@@ -201,6 +201,9 @@
 (defmethod slack-message-thread-parentp ((m slack-message))
   (and (oref m thread-ts) (string= (oref m ts) (oref m thread-ts))))
 
+(defmethod slack-message-thread-messagep ((m slack-message))
+  (and (oref m thread-ts) (not (slack-message-thread-parentp m))))
+
 (defun slack-thread-update-state (payload team)
   (let* ((room (slack-room-find (plist-get payload :channel) team))
          (state (plist-get payload :message))
